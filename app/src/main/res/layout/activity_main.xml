@@ -10,15 +10,16 @@
         <!--android:layout_height="wrap_content"/>-->
 
 
-    <com.boowa.ratingbar.StarBar
-        android:id="@+id/starBar"
+    <com.boowa.ratingbar.RatingBar
+        android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        auto:starEmpty="@mipmap/star1"
-        auto:starFill="@mipmap/star2"
-        auto:starDistance="5dp"
-        auto:count="8"
-        auto:size="30dp"/>
+        auto:starEmpty="@mipmap/ic_star_empty"
+        auto:starFull="@mipmap/ic_star_full"
+        auto:starMargin="5dp"
+        auto:starCount="5"
+        auto:starSize="30dp"
+        auto:starMark="2.5"/>
 
 
 </FrameLayout>

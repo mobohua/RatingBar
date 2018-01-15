@@ -3,18 +3,17 @@ package com.boowa.ratingbar.example;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.boowa.ratingbar.StarBar;
+import com.boowa.ratingbar.RatingBar;
 
 public class MainActivity extends Activity {
-    private StarBar mStarBar;
+    private RatingBar mRa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mStarBar = (StarBar) findViewById(R.id.starBar);
-        mStarBar.setStarMark(1.5f);
+        mRa = findViewById(R.id.ratingBar);
     }
 
 }
