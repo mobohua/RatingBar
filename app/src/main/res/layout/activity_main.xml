@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:auto="http://schemas.android.com/apk/res-auto">
+
+    <!--<com.boowa.auto.RatingBar-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"/>-->
+
+
+    <com.boowa.ratingbar.StarBar
+        android:id="@+id/starBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        auto:starEmpty="@mipmap/star1"
+        auto:starFill="@mipmap/star2"
+        auto:starDistance="5dp"
+        auto:count="8"
+        auto:size="30dp"/>
+
+
+</FrameLayout>
