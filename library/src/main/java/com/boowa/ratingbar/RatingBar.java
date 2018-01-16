@@ -173,4 +173,13 @@ public class RatingBar extends View {
     }
 
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if(mStarFullBitmap!= null && !mStarFullBitmap.isRecycled()){
+            mStarFullBitmap.recycle();
+            mStarFullBitmap = null;
+        }
+    }
+
 }

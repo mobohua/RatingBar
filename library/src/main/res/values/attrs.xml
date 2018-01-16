@@ -15,7 +15,7 @@
         <attr name="integerMark" format="boolean"/>
         <!--评分-->
         <attr name="starMark" format="float"/>
-        <!--滑动-->
+        <!--能否滑动-->
         <attr name="canMove" format="boolean"/>
     </declare-styleable>
 
