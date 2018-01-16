@@ -25,4 +25,5 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':library')
+//    implementation 'com.github.mobohua:RatingBar:0.0.1'
 }
