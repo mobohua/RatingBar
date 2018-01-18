@@ -9,7 +9,6 @@ captures/
 .externalNativeBuild
 
 #added
-gradle/
 .idea/
 bin/
 gen/
@@ -17,4 +16,3 @@ out/
 proguard/
 *.log
 .navigation/
-gradlew*
