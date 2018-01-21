@@ -1,4 +1,6 @@
-[![](https://jitpack.io/v/mobohua:RatingBar.svg)](https://jitpack.io/#mobohua:RatingBar)
+
+
+[![](https://jitpack.io/v/mobohua/RatingBar.svg)](https://jitpack.io/#mobohua/RatingBar)
 
 
 ```
