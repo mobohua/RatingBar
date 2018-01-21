@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     xmlns:auto="http://schemas.android.com/apk/res-auto">
 
-    <!--<com.boowa.auto.RatingBar-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"/>-->
 
 
     <com.boowa.ratingbar.RatingBar
