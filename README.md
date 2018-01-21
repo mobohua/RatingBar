@@ -1,7 +1,5 @@
 [![](https://jitpack.io/v/mobohua:RatingBar.svg)](https://jitpack.io/#mobohua:RatingBar)
 
-自用
-
 
 ```
 <!--尺寸值-->
