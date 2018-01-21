@@ -1,4 +1,6 @@
-自用，逻辑参考：http://blog.csdn.net/a756213932/article/details/51939422
+[![](https://jitpack.io/v/mobohua:RatingBar.svg)](https://jitpack.io/#mobohua:RatingBar)
+
+自用
 
 
 ```
