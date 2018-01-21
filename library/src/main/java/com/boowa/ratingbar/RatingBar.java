@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -23,10 +24,10 @@ public class RatingBar extends View {
     private float mStarMark;
 
     private Bitmap mStarFullBitmap;
-    private Drawable mStarEmptyDrawable;
+    private Bitmap mStarEmptyBitmap;
 
     private OnStarChangeListener mOnStarChangeListener;
-    private Paint mPaint;
+    private Paint mFullPaint, mEmptyPaint;
     private boolean mIntegerMark;
 
     private boolean mCanMove;
@@ -48,23 +49,28 @@ public class RatingBar extends View {
         mStarMargin = typedArray.getDimensionPixelSize(R.styleable.RatingBar_starMargin, 0);
         mStarSize = typedArray.getDimensionPixelSize(R.styleable.RatingBar_starSize, 20);
         mStarCount = typedArray.getInteger(R.styleable.RatingBar_starCount, 5);
-        mStarEmptyDrawable = typedArray.getDrawable(R.styleable.RatingBar_starEmpty);
+        mStarEmptyBitmap = drawableToBitmap(typedArray.getDrawable(R.styleable.RatingBar_starEmpty));
         mStarFullBitmap = drawableToBitmap(typedArray.getDrawable(R.styleable.RatingBar_starFull));
 
         mIntegerMark = typedArray.getBoolean(R.styleable.RatingBar_integerMark, false);
         mStarMark = typedArray.getFloat(R.styleable.RatingBar_starMark, 0);
 
-        if(mIntegerMark){
+        if (mIntegerMark) {
             mStarMark = (float) Math.ceil(mStarMark);
         }
 
-        mCanMove = typedArray.getBoolean(R.styleable.RatingBar_canMove,true);
+        mCanMove = typedArray.getBoolean(R.styleable.RatingBar_canMove, true);
 
         typedArray.recycle();
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setShader(new BitmapShader(mStarFullBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        mFullPaint = new Paint();
+        mFullPaint.setAntiAlias(true);
+        mFullPaint.setShader(new BitmapShader(mStarFullBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+
+        mEmptyPaint = new Paint();
+        mEmptyPaint.setAntiAlias(true);
+        mEmptyPaint.setShader(new BitmapShader(mStarEmptyBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+
     }
 
 
@@ -73,22 +79,26 @@ public class RatingBar extends View {
     }
 
     public void setStarMark(float mark) {
+        float starMark;
         if (mIntegerMark) {
-            mStarMark = (float) Math.ceil(mark);
+            starMark = (float) Math.ceil(mark);
         } else {
-//            mStarMark = Math.round(mark * 10) * 1.0f / 10;
-            mStarMark = mark;
+            starMark = mark;
         }
+        if (mStarMark == starMark) {
+            return;
+        }
+        mStarMark = starMark;
         if (this.mOnStarChangeListener != null) {
             this.mOnStarChangeListener.onStarChange(mStarMark);  //调用监听接口
         }
+
         invalidate();
     }
 
     public float getStarMark() {
         return mStarMark;
     }
-
 
     public interface OnStarChangeListener {
         void onStarChange(float mark);
@@ -107,32 +117,31 @@ public class RatingBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mStarFullBitmap == null || mStarEmptyDrawable == null) {
+        if (mStarFullBitmap == null || mStarEmptyBitmap == null) {
             return;
         }
+
         for (int i = 0; i < mStarCount; i++) {
-            mStarEmptyDrawable.setBounds((mStarMargin + mStarSize) * i, 0, (mStarMargin + mStarSize) * i + mStarSize, mStarSize);
-            mStarEmptyDrawable.draw(canvas);
-        }
-        if (mStarMark > 1) {
-            canvas.drawRect(0, 0, mStarSize, mStarSize, mPaint);
-//            if (mStarMark - (int) (mStarMark) == 0) {
-            if (mStarMark % 1 == 0) {
-                for (int i = 1; i < mStarMark; i++) {
-                    canvas.translate(mStarMargin + mStarSize, 0);
-                    canvas.drawRect(0, 0, mStarSize, mStarSize, mPaint);
-                }
-            } else {
-                for (int i = 1; i < mStarMark - 1; i++) {
-                    canvas.translate(mStarMargin + mStarSize, 0);
-                    canvas.drawRect(0, 0, mStarSize, mStarSize, mPaint);
-                }
+
+            if (i != 0) {
                 canvas.translate(mStarMargin + mStarSize, 0);
-//                canvas.drawRect(0, 0, mStarSize * (Math.round((mStarMark - (int) (mStarMark)) * 10) * 1.0f / 10), mStarSize, mPaint);
-                canvas.drawRect(0, 0, mStarSize * (mStarMark % 1), mStarSize, mPaint);
             }
-        } else {
-            canvas.drawRect(0, 0, mStarSize * mStarMark, mStarSize, mPaint);
+
+
+            if (mStarMark - 1 >= i) {
+                canvas.drawRect(0, 0, mStarSize, mStarSize, mFullPaint);
+            } else {
+                if (mStarMark > i) {
+                    canvas.drawRect(0, 0, (mStarMark % 1) * mStarSize, mStarSize, mFullPaint);
+
+                    canvas.drawRect((mStarMark % 1) * mStarSize, 0, mStarSize, mStarSize, mEmptyPaint);
+                } else {
+                    canvas.drawRect(0, 0, mStarSize, mStarSize, mEmptyPaint);
+                }
+
+            }
+
+
         }
 
     }
@@ -140,7 +149,7 @@ public class RatingBar extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if(!mCanMove){
+        if (!mCanMove) {
             return false;
         }
 
@@ -182,10 +191,18 @@ public class RatingBar extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if(mStarFullBitmap!= null && !mStarFullBitmap.isRecycled()){
+
+        if (mStarFullBitmap != null && !mStarFullBitmap.isRecycled()) {
             mStarFullBitmap.recycle();
             mStarFullBitmap = null;
         }
+
+        if (mStarEmptyBitmap != null && mStarEmptyBitmap.isRecycled()) {
+            mStarEmptyBitmap.recycle();
+            mStarEmptyBitmap = null;
+        }
+
     }
 
 }
+

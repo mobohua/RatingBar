@@ -15,8 +15,8 @@
         auto:starFull="@mipmap/ic_star_full"
         auto:starMargin="5dp"
         auto:starCount="5"
-        auto:starSize="30dp"
-        auto:starMark="2.5"/>
+        auto:starMark="2.5"
+        auto:starSize="30dp"/>
 
 
 </FrameLayout>
