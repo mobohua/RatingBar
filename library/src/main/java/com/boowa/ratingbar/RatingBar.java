@@ -193,19 +193,13 @@ public class RatingBar extends View {
     }
 
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-//        if (!mCanMove) {
-//            return false;
-//        }
-//
-//        return super.dispatchTouchEvent(event);
-
-        return mCanMove;
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if (!mCanMove) {
+            return false;
+        }
 
         int x = (int) event.getX();
         if (x < 0) {
@@ -216,6 +210,7 @@ public class RatingBar extends View {
         }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                getParent().requestDisallowInterceptTouchEvent(true);
             case MotionEvent.ACTION_MOVE:
                 setStarMark(x * 1.0f / (getMeasuredWidth() * 1.0f / mStarCount));
                 break;

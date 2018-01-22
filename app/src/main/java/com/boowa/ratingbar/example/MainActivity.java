@@ -16,14 +16,6 @@ public class MainActivity extends Activity {
 
         mRb = (RatingBar) findViewById(R.id.ratingBar);
 
-        View red = findViewById(R.id.red);
-        red.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRb.setStarSize(150);
-                mRb.requestLayout();
-            }
-        });
 
     }
 
