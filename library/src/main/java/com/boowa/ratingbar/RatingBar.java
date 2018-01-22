@@ -111,6 +111,18 @@ public class RatingBar extends View {
         mStarSize = starSize;
     }
 
+    public void setCanMove(boolean canMove) {
+        mCanMove = canMove;
+    }
+
+    public void setStarEmptyDrawable(Drawable starEmptyDrawable) {
+        mStarEmptyDrawable = starEmptyDrawable;
+    }
+
+    public void setStarFullDrawable(Drawable starFullDrawable) {
+        mStarFullDrawable = starFullDrawable;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
