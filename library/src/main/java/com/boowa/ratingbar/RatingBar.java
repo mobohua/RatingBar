@@ -183,11 +183,13 @@ public class RatingBar extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (!mCanMove) {
-            return false;
-        }
+//        if (!mCanMove) {
+//            return false;
+//        }
+//
+//        return super.dispatchTouchEvent(event);
 
-        return super.dispatchTouchEvent(event);
+        return mCanMove;
     }
 
     @Override
