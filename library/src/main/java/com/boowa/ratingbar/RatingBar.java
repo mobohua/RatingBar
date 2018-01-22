@@ -99,6 +99,18 @@ public class RatingBar extends View {
         this.mOnStarChangeListener = onStarChangeListener;
     }
 
+    public void setStarMargin(int starMargin) {
+        mStarMargin = starMargin;
+    }
+
+    public void setStarCount(int starCount) {
+        mStarCount = starCount;
+    }
+
+    public void setStarSize(int starSize) {
+        mStarSize = starSize;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
