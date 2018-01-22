@@ -13,7 +13,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRa = findViewById(R.id.ratingBar);
+        mRa = (RatingBar) findViewById(R.id.ratingBar);
+
     }
 
 }

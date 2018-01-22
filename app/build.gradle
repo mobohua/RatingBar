@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-//        implementation project(':library')
-    implementation 'com.github.mobohua:RatingBar:0.0.4'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+        compile project(':library')
+//    compile 'com.github.mobohua:RatingBar:0.0.4'
 }

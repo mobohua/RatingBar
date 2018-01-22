@@ -2,15 +2,10 @@ package com.boowa.ratingbar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -31,6 +26,9 @@ public class RatingBar extends View {
     private boolean mIntegerMark;
 
     private boolean mCanMove;
+
+    //star绘制的top,使star始终从中间开始绘制
+    private int mStarTop;
 
     public RatingBar(Context context) {
         this(context, null);
@@ -104,7 +102,16 @@ public class RatingBar extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(mStarSize * mStarCount + mStarMargin * (mStarCount - 1), mStarSize);
+        int width = mStarSize * mStarCount + mStarMargin * (mStarCount - 1);
+        int height = mStarSize;
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mStarTop = (h - mStarSize) / 2;
+
     }
 
     @Override
@@ -114,30 +121,43 @@ public class RatingBar extends View {
             return;
         }
 
+
+        int top = mStarTop;
+        int bottom = mStarSize + mStarTop;
         for (int i = 0; i < mStarCount; i++) {
+            int left = i * (mStarMargin + mStarSize);
+            int right = left + mStarSize;
 
 
             if (mStarMark - 1 >= i) {
 
-                mStarFullDrawable.setBounds(i * (mStarMargin + mStarSize), 0, i * (mStarMargin + mStarSize) + mStarSize, mStarSize);
+                mStarFullDrawable.setBounds(left, top, right, bottom);
                 mStarFullDrawable.draw(canvas);
 
             } else if (mStarMark > i) {
 
-                mStarEmptyDrawable.setBounds(i * (mStarMargin + mStarSize), 0, i * (mStarMargin + mStarSize) + mStarSize, mStarSize);
-                mStarEmptyDrawable.draw(canvas);
+                float border = left + (mStarMark % 1) * mStarSize;
 
                 canvas.save();
-                canvas.clipRect(i * (mStarMargin + mStarSize), 0, (int) (i * (mStarMargin + mStarSize) + (mStarMark % 1) * mStarSize), mStarSize);
 
-                mStarFullDrawable.setBounds(i * (mStarMargin + mStarSize), 0, i * (mStarMargin + mStarSize) + mStarSize, mStarSize);
+                canvas.clipRect(border, top, right, bottom);
+
+                mStarEmptyDrawable.setBounds(left, top, right, bottom);
+                mStarEmptyDrawable.draw(canvas);
+                canvas.restore();
+
+                canvas.save();
+
+                canvas.clipRect(left, top, border, bottom);
+
+                mStarFullDrawable.setBounds(left, top, right, bottom);
                 mStarFullDrawable.draw(canvas);
 
                 canvas.restore();
 
             } else {
 
-                mStarEmptyDrawable.setBounds(i * (mStarMargin + mStarSize), 0, i * (mStarMargin + mStarSize) + mStarSize, mStarSize);
+                mStarEmptyDrawable.setBounds(left, top, right, bottom);
                 mStarEmptyDrawable.draw(canvas);
 
             }

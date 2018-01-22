@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:auto="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:auto="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
+    <View android:id="@+id/blue"
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:background="@android:color/holo_blue_light"/>
 
 
     <com.boowa.ratingbar.RatingBar
@@ -12,12 +16,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        auto:starCount="5"
         auto:starEmpty="@mipmap/ic_star_empty"
         auto:starFull="@mipmap/ic_star_full"
         auto:starMargin="5dp"
-        auto:starCount="5"
         auto:starMark="2.5"
         auto:starSize="30dp"/>
+
+
+
+    <View android:id="@+id/red"
+          android:layout_width="match_parent"
+          android:layout_height="100dp"
+          android:layout_alignParentBottom="true"
+          android:background="@android:color/holo_red_light"/>
 
 
 </RelativeLayout>
