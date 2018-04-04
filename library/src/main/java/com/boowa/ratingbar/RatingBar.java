@@ -27,6 +27,8 @@ public class RatingBar extends View {
 
     private boolean mCanMove;
 
+    private int mViewWidth;
+
     //star绘制的top,使star始终从中间开始绘制
     private int mStarTop;
 
@@ -135,6 +137,11 @@ public class RatingBar extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mStarTop = (h - mStarSize) / 2;
+        mViewWidth = w;
+        int starSize = (w - mStarMargin * (mStarCount - 1)) / mStarCount;
+        if (starSize < mStarSize) {
+            mStarSize = starSize;
+        }
 
     }
 
@@ -193,7 +200,6 @@ public class RatingBar extends View {
     }
 
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -205,14 +211,14 @@ public class RatingBar extends View {
         if (x < 0) {
             x = 0;
         }
-        if (x > getMeasuredWidth()) {
-            x = getMeasuredWidth();
+        if (x > mViewWidth) {
+            x = mViewWidth;
         }
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 getParent().requestDisallowInterceptTouchEvent(true);
             case MotionEvent.ACTION_MOVE:
-                setStarMark(x * 1.0f / (getMeasuredWidth() * 1.0f / mStarCount));
+                setStarMark(x * 1.0f / (mViewWidth * 1.0f / mStarCount));
                 break;
             case MotionEvent.ACTION_UP:
                 break;
